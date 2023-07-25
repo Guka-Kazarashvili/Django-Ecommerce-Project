@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add Product Page{% endblock %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ add_product_form.as_p}}
+    <input type="submit" value="Add Product">
+</form>
+{% endblock %}

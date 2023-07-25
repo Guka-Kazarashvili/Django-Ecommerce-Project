@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}My Items Page{% endblock %}
+{% block content %}
+<div class="container py-3 px-5">
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4">
+        <h2>You have : {{ item_count }} Items</h2>
+    
+        <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <a href="{% url 'add_product' %}" class="btn btn-outline-primary">Add Item</a>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="row">
+            {% for item in user_items %}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ item.imageURL }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <h5>{{ item.price|floatformat:2 }}$</h3>
+                        <a href="{% url 'pInfo' item.id %}" class="btn btn-primary">View</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ item.id }}">Delete</button>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <!-- Modal for each item -->
+            <div class="modal fade" id="deleteModal-{{ item.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete "{{ item.name }}"?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Add a form to submit the delete request -->
+                            <form method="POST" action="{% url 'delete_product' item.id %}">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

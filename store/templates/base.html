@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+    <div class="container py-3 px-5">
+        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+            <a href="{% url 'home' %}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                <span class="fs-4">Ecommerce</span>
+            </a>
+      
+            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                {% if user.is_authenticated %}
+                <span class="me-3 py-2 link-body-emphasis text-decoration-none">Welcome, {{ user }} |</span>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'my_items' %}">My items</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'cart' %}">My cart</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'store' %}">Store</a>
+                <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'store' %}">Store</a>
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'signup' %}">Sign up</a>
+                <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'login' %}">Log in</a>
+                {% endif %}
+            </nav>
+        </div>      
+    
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+
+</body>
+</html>

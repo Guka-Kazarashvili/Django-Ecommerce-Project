@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Store Page{% endblock %}
+{% block content %}
+<div class="container py-3 px-5">
+    <div class="container text-center">
+        <div class="row">
+            {% for product in products %}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ product.imageURL }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <h5>{{ product.price|floatformat:2 }}$</h3>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Add to cart</a>
+                        <a href="{% url 'pInfo' product.id %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

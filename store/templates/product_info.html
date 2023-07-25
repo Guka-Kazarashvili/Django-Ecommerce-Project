@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Product Info{% endblock %}
+{% block content %}
+<div class="container py-3 px-5">
+    <h2 class="pb-2 border-bottom">{{ product_info.name }}</h2>
+    <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-3">
+        <img src="{{ product_info.imageURL }}">
+        <div class="col d-flex flex-column align-items-start ">
+            <h2 class="fw-bold text-body-emphasis">Description</h2>
+            <hr>
+            <p class="text-body-secondary">{{ product_info.description }}</p>
+            <h2 class="">{{ product_info.price|floatformat:2 }}$</h2>
+            <p class="text-body-secondary">Item Owner - {{ product_info.added_by }}</p>
+            <div class="card-body">
+                <a href="{% url 'store' %}" class="btn btn-outline-dark">Back</a>
+                <a href="{% url 'add_to_cart' product_info.id %}" class="btn btn-outline-success">Add to cart</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
